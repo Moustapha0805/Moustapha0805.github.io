@@ -8,46 +8,44 @@
 <html lang="fr">
 
 <head>
-  <meta name="google-site-verification" content="Mktx8i5Lt0Q5gibwttlvbeGwlkLUg_n1ETJGe2Sk6rE" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="style.css">
-  <title>Moustapha Gueye — Développeur Web Freelance à Dakar</title>
+  <title>Moustapha Gueye — Étudiant en développement web à Dakar</title>
 
   <!-- SEO & Métadonnées descriptives -->
   <meta name="description"
-    content="Moustapha Gueye, développeur web freelance à Dakar (Sénégal). Création de sites vitrines et e-commerce légers, rapides et mobile-first pour PME locales et clients internationaux.">
+    content="Moustapha Gueye, étudiant à l'ESCOA (en face de l'UCAD, Dakar). Je crée des sites web simples, rapides et adaptés aux smartphones.">
   <meta name="author" content="Moustapha Gueye">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph / WhatsApp / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Moustapha Gueye — Développeur Web Freelance à Dakar">
+  <meta property="og:title" content="Moustapha Gueye — Étudiant en développement web à Dakar">
   <meta property="og:description"
-    content="Sites vitrines et e-commerce pour PME. Code artisanal, rapide, mobile-first. Basé à Dakar, disponible partout.">
-  <meta property="og:image" content="images/moustapha.jpg">
+    content="Étudiant à l'ESCOA (en face de l'UCAD). Je conçois des sites web simples, légers et bien adaptés aux smartphones.">
+  <meta property="og:image" content="images/moustapha1.jpg">
   <meta property="og:locale" content="fr_SN">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Moustapha Gueye — Développeur Web Freelance">
+  <meta name="twitter:title" content="Moustapha Gueye — Étudiant en développement web">
   <meta name="twitter:description"
-    content="Création de sites web professionnels pour PME à Dakar et à l'international.">
-  <meta name="twitter:image" content="images/moustapha.jpg">
+    content="Étudiant à l'ESCOA à Dakar. Création de sites web légers et rapides.">
+  <meta name="twitter:image" content="images/moustapha1.jpg">
 
-  <!-- Favicon SVG autonome en ligne (évite les requêtes 404) -->
+  <!-- Favicon SVG autonome en ligne -->
   <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23121110'/><text x='50' y='65' font-size='50' font-family='serif' font-weight='bold' fill='%23cba258' text-anchor='middle'>MG</text></svg>">
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23163A8A'/><text x='50' y='65' font-size='50' font-family='sans-serif' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'>MG</text></svg>">
 
-  <!-- Google Fonts : Playfair Display (Serif éditoriale) & Plus Jakarta Sans (Sans-serif claire) -->
+  <!-- Google Fonts : Bricolage Grotesque (Titres) & Instrument Sans (Texte) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap"
     rel="stylesheet">
 
   <!-- Feuille de styles unique -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=10">
 
   <!-- Données structurées Schema.org pour le référencement naturel -->
   <script type="application/ld+json">
@@ -55,8 +53,8 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Moustapha Gueye",
-    "jobTitle": "Développeur web freelance",
-    "description": "Création de sites vitrines et e-commerce pour PME",
+    "jobTitle": "Étudiant en développement web",
+    "description": "Étudiant à l'ESCOA (en face de l'UCAD à Dakar). Création de sites web simples et rapides.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Dakar",
@@ -71,17 +69,19 @@
       "CSS3",
       "JavaScript",
       "Sites vitrines",
-      "E-commerce mobile-first"
+      "Sites dynamiques"
     ]
   }
   </script>
 </head>
 
-
 <body>
 
   <!-- Lien d'évitement pour l'accessibilité au clavier -->
   <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Overlay du menu mobile (HORS du header pour éviter le stacking context) -->
+  <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- ========== SECTION : NAVBAR ========== -->
   <header class="site-header" id="header" role="banner">
@@ -94,31 +94,46 @@
       <!-- Indicateur de disponibilité discret -->
       <div class="availability-badge" aria-label="Statut actuel">
         <span class="status-pulse" aria-hidden="true"></span>
-        <span class="status-text">Disponible • Dakar &amp; Remote</span>
+        <span class="status-text">Disponible pour vos projets • Dakar</span>
       </div>
 
       <!-- Bouton d'ouverture du menu mobile -->
-      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-drawer"
         aria-label="Ouvrir le menu de navigation">
+        <span class="menu-bar"></span>
         <span class="menu-bar"></span>
         <span class="menu-bar"></span>
       </button>
 
-      <!-- Navigation principale -->
-      <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Menu principal">
+      <!-- Navigation desktop (visible >= 768px) -->
+      <nav class="nav-desktop" id="nav-desktop" role="navigation" aria-label="Menu principal">
         <ul class="nav-list">
-          <li class="nav-item"><a href="#projets" class="nav-link">Projets</a></li>
-          <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
-          <li class="nav-item"><a href="#process" class="nav-link">Méthode</a></li>
+          <li class="nav-item"><a href="#hero" class="nav-link">Accueil</a></li>
           <li class="nav-item"><a href="#a-propos" class="nav-link">À propos</a></li>
-          <li class="nav-item"><a href="#tarifs" class="nav-link">Tarifs</a></li>
-          <li class="nav-item">
-            <a href="#contact" class="btn btn-sm btn-outline nav-cta">Discuter d'un projet</a>
+          <li class="nav-item"><a href="#tarifs" class="nav-link">Offres</a></li>
+          <li class="nav-item"><a href="#projets" class="nav-link">Projets</a></li>
+          <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+          <li class="nav-item nav-cta-item">
+            <a href="#contact" class="btn btn-sm btn-outline nav-cta">Me parler d'un projet</a>
           </li>
         </ul>
       </nav>
     </div>
   </header>
+
+  <!-- Drawer mobile (HORS du header pour éviter le stacking context) -->
+  <nav class="nav-drawer" id="nav-drawer" role="navigation" aria-label="Menu mobile" aria-hidden="true">
+    <ul class="drawer-list">
+      <li class="drawer-item"><a href="#hero" class="drawer-link">Accueil</a></li>
+      <li class="drawer-item"><a href="#a-propos" class="drawer-link">À propos</a></li>
+      <li class="drawer-item"><a href="#tarifs" class="drawer-link">Offres</a></li>
+      <li class="drawer-item"><a href="#projets" class="drawer-link">Projets</a></li>
+      <li class="drawer-item"><a href="#contact" class="drawer-link">Contact</a></li>
+      <li class="drawer-item drawer-cta-item">
+        <a href="#contact" class="btn btn-primary drawer-cta-btn">Me parler d'un projet</a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Zone de contenu principal pour les lecteurs d'écran -->
   <main id="contenu-principal">
@@ -131,25 +146,25 @@
         <div class="hero-content">
           <div class="hero-eyebrow">
             <span class="eyebrow-dash" aria-hidden="true"></span>
-            Développeur web freelance — Dakar, Sénégal
+            Étudiant en développement web — Dakar, Sénégal
           </div>
 
           <h1 class="hero-title" id="hero-title">
-            Des sites web précis, rapides et conçus pour faire grandir votre activité.
+            Des sites web simples, rapides et faciles à utiliser sur téléphone.
           </h1>
 
           <p class="hero-lead">
-            J'aide les PME sénégalaises et les entrepreneurs à construire une présence en ligne solide. Pas de templates
-            surchargés ni de complexité inutile : du code propre, pensé d'abord pour les utilisateurs sur smartphone.
+            Je suis étudiant à l'ESCOA, située en face de l'UCAD à Dakar. Je vous aide à créer votre site internet : des
+            pages légères, claires et bien adaptées aux smartphones.
           </p>
 
           <div class="hero-actions">
             <a href="https://wa.me/221774409492" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-              <span>Échanger sur WhatsApp</span>
+              <span>M'écrire sur WhatsApp</span>
               <span class="btn-arrow" aria-hidden="true">→</span>
             </a>
             <a href="#projets" class="btn btn-secondary">
-              Découvrir mes projets
+              Voir mes projets
             </a>
           </div>
 
@@ -157,15 +172,15 @@
           <ul class="hero-perks" role="list">
             <li class="hero-perk-item">
               <span class="perk-bullet" aria-hidden="true">/</span>
-              <span>100% Mobile-first</span>
+              <span>100% adapté aux mobiles</span>
             </li>
             <li class="hero-perk-item">
               <span class="perk-bullet" aria-hidden="true">/</span>
-              <span>Paiement &amp; prix en FCFA</span>
+              <span>Prix clairs en FCFA</span>
             </li>
             <li class="hero-perk-item">
               <span class="perk-bullet" aria-hidden="true">/</span>
-              <span>Zéro abonnement caché</span>
+              <span>Aucun frais caché</span>
             </li>
           </ul>
         </div>
@@ -175,12 +190,12 @@
           <div class="photo-wrapper">
             <div class="photo-frame">
               <div class="photo-fallback" aria-hidden="true">MG</div>
-              <img src="moustapha.jpg" alt="Portrait de Moustapha Gueye, développeur web freelance" width="600"
-                height="750" loading="eager" fetchpriority="high" class="photo-img">
+              <img src="images/moustapha1.jpg?v=2" alt="Portrait de Moustapha Gueye, étudiant en développement web"
+                width="600" height="750" loading="eager" fetchpriority="high" class="photo-img">
             </div>
             <div class="photo-caption">
               <span class="caption-name">Moustapha Gueye</span>
-              <span class="caption-role">Dakar, Keur Massar</span>
+              <span class="caption-role">Étudiant à l'ESCOA • Dakar</span>
             </div>
           </div>
         </div>
@@ -193,11 +208,11 @@
       <div class="container">
 
         <header class="section-header">
-          <div class="section-eyebrow">01 — Réalisations</div>
-          <h2 class="section-title" id="projects-title">Projets sélectionnés</h2>
+          <div class="section-eyebrow">01 — Mes travaux</div>
+          <h2 class="section-title" id="projects-title">Quelques projets réalisés</h2>
           <p class="section-desc">
-            Chaque projet est traité comme une réponse sur mesure à un besoin précis. Pas de maquettes factices : voici
-            un aperçu technique des solutions livrées.
+            Voici des exemples concrets de sites que j'ai créés. Pas de maquettes inventées : des projets fonctionnels,
+            rapides et pensés pour être faciles à consulter.
           </p>
         </header>
 
@@ -211,42 +226,34 @@
                 <span class="project-tag-brand">Keur Massar</span>
                 <span class="project-typographic-name">ISEF</span>
               </div>
-
-              <!-- Zone image commentée : à décommenter quand vous aurez votre capture réelle
-              <div class="project-screenshot">
-                <img src="images/projets/isef.jpg" alt="Capture d'écran du site de l'ISEF" width="800" height="500" loading="lazy">
-              </div>
-              -->
             </div>
 
             <div class="project-body">
               <div class="project-meta">
-                <span class="project-type">Site vitrine institutionnel</span>
-                <span class="project-role">Rôle : Intégration front-end &amp; architecture</span>
+                <span class="project-type">Site vitrine d'école</span>
+                <span class="project-role">Ce que j'ai fait : Création du site et mise en page</span>
               </div>
 
               <h3 class="project-title">Institut Supérieur d'Excellence et de Formation</h3>
 
               <p class="project-summary">
-                Site vitrine complet pour un établissement scolaire basé à Keur Massar. Il structure l'offre des
-                filières, intègre un carrousel d'actualités, des espaces d'information dédiés aux parents et une
-                localisation via Google Maps.
+                Site complet pour un établissement scolaire à Keur Massar. Il présente les filières d'études, les
+                actualités de l'école, les informations utiles pour les parents et un plan Google Maps.
               </p>
 
               <ul class="project-tech-list" aria-label="Technologies employées">
-                <li class="tech-tag">HTML5 Sémantique</li>
-                <li class="tech-tag">CSS3 Modulaire</li>
-                <li class="tech-tag">JavaScript Vanilla</li>
-                <li class="tech-tag">Google Maps Embed</li>
+                <li class="tech-tag">HTML5</li>
+                <li class="tech-tag">CSS3</li>
+                <li class="tech-tag">JavaScript</li>
+                <li class="tech-tag">Google Maps</li>
               </ul>
 
               <div class="project-footer">
-                <!-- data-link vide : masqué automatiquement par le CSS et le script -->
                 <a href="#" class="project-link" data-link="" target="_blank" rel="noopener noreferrer">
                   <span>Voir le projet</span>
                   <span aria-hidden="true">↗</span>
                 </a>
-                <span class="project-status-note">Projet livré pour la rentrée académique</span>
+                <span class="project-status-note">Mis en ligne pour la rentrée scolaire</span>
               </div>
             </div>
           </article>
@@ -259,33 +266,26 @@
                 <span class="project-tag-brand">Dakar • Commerce</span>
                 <span class="project-typographic-name">GueyeElectronique</span>
               </div>
-
-              <!-- Zone image commentée : à décommenter pour afficher une capture d'écran
-              <div class="project-screenshot">
-                <img src="images/projets/gueye-electronique.jpg" alt="Capture d'écran de GueyeElectronique" width="800" height="500" loading="lazy">
-              </div>
-              -->
             </div>
 
             <div class="project-body">
               <div class="project-meta">
-                <span class="project-type">Landing page e-commerce</span>
-                <span class="project-role">Rôle : Design mobile &amp; logique panier</span>
+                <span class="project-type">Boutique en ligne simple</span>
+                <span class="project-role">Ce que j'ai fait : Design pour mobile et commande WhatsApp</span>
               </div>
 
               <h3 class="project-title">GueyeElectronique</h3>
 
               <p class="project-summary">
-                Vitrine marchande pensée spécifiquement pour les connexions mobiles sénégalaises. Mise en avant directe
-                des produits avec tarifs en FCFA et bouton de commande immédiat redirigeant vers une discussion WhatsApp
-                préremplie.
+                Petite boutique pensée pour les téléphones au Sénégal. Les prix sont affichés en FCFA et les clients
+                peuvent commander directement avec un message WhatsApp tout prêt.
               </p>
 
               <ul class="project-tech-list" aria-label="Technologies employées">
                 <li class="tech-tag">HTML5</li>
-                <li class="tech-tag">Mobile-First CSS</li>
-                <li class="tech-tag">Panier WhatsApp JS</li>
-                <li class="tech-tag">Devises FCFA</li>
+                <li class="tech-tag">CSS Mobile</li>
+                <li class="tech-tag">Commande WhatsApp</li>
+                <li class="tech-tag">Prix en FCFA</li>
               </ul>
 
               <div class="project-footer">
@@ -293,7 +293,7 @@
                   <span>Voir le projet</span>
                   <span aria-hidden="true">↗</span>
                 </a>
-                <span class="project-status-note">Optimisé pour les réseaux 3G/4G locaux</span>
+                <span class="project-status-note">Rapide à charger, même avec une faible connexion</span>
               </div>
             </div>
           </article>
@@ -306,32 +306,26 @@
                 <span class="project-tag-brand">Immobilier • Sénégal</span>
                 <span class="project-typographic-name">Rassoul Tijara</span>
               </div>
-
-              <!-- Zone image commentée
-              <div class="project-screenshot">
-                <img src="images/projets/rassoul-tijara.jpg" alt="Capture d'écran de Rassoul Tijara" width="800" height="500" loading="lazy">
-              </div>
-              -->
             </div>
 
             <div class="project-body">
               <div class="project-meta">
-                <span class="project-type">Catalogue immobilier &amp; foncier</span>
-                <span class="project-role">Rôle : Développement front-end &amp; filtres</span>
+                <span class="project-type">Site de biens immobiliers</span>
+                <span class="project-role">Ce que j'ai fait : Présentation des offres et filtres</span>
               </div>
 
               <h3 class="project-title">Rassoul Tijara Immobilier</h3>
 
               <p class="project-summary">
-                Plateforme de présentation de biens immobiliers et de parcelles à bâtir au Sénégal. Interface épurée
-                avec fiches détaillées, caractéristiques techniques et prise de rendez-vous directe avec les agents.
+                Un site pour présenter des terrains et des maisons au Sénégal. Les fiches sont claires et les visiteurs
+                peuvent contacter directement les agents pour visiter.
               </p>
 
               <ul class="project-tech-list" aria-label="Technologies employées">
                 <li class="tech-tag">HTML5</li>
-                <li class="tech-tag">CSS Grid / Flexbox</li>
-                <li class="tech-tag">Filtres JavaScript</li>
-                <li class="tech-tag">Formulaires qualifiés</li>
+                <li class="tech-tag">CSS Flexbox</li>
+                <li class="tech-tag">Filtres de recherche</li>
+                <li class="tech-tag">Contact direct</li>
               </ul>
 
               <div class="project-footer">
@@ -339,7 +333,7 @@
                   <span>Voir le projet</span>
                   <span aria-hidden="true">↗</span>
                 </a>
-                <span class="project-status-note">Catalogue consultable sans temps de latence</span>
+                <span class="project-status-note">Navigation fluide et sans attente</span>
               </div>
             </div>
           </article>
@@ -352,32 +346,26 @@
                 <span class="project-tag-brand">Sport &amp; Bien-être</span>
                 <span class="project-typographic-name">Studio Fitness Dakar</span>
               </div>
-
-              <!-- Zone image commentée
-              <div class="project-screenshot">
-                <img src="images/projets/fitness.jpg" alt="Capture d'écran de Studio Fitness" width="800" height="500" loading="lazy">
-              </div>
-              -->
             </div>
 
             <div class="project-body">
               <div class="project-meta">
-                <span class="project-type">Site vitrine &amp; planning interactif</span>
-                <span class="project-role">Rôle : Conception UI &amp; intégration responsive</span>
+                <span class="project-type">Site pour salle de sport</span>
+                <span class="project-role">Ce que j'ai fait : Mise en page et planning des cours</span>
               </div>
 
               <h3 class="project-title">Studio de Sport &amp; Fitness</h3>
 
               <p class="project-summary">
-                Site vitrine pour une salle de sport dakarroise comprenant la grille des plannings de cours collectifs
-                par jour, la présentation des coachs et le choix des formules d'abonnement mensuelles.
+                Site pour une salle de sport à Dakar avec l'emploi du temps des cours de la semaine, la présentation
+                des coachs et le détail des abonnements.
               </p>
 
               <ul class="project-tech-list" aria-label="Technologies employées">
-                <li class="tech-tag">HTML5 Sémantique</li>
-                <li class="tech-tag">CSS Animations sobres</li>
-                <li class="tech-tag">Planning interactif JS</li>
-                <li class="tech-tag">Micro-données Locales</li>
+                <li class="tech-tag">HTML5</li>
+                <li class="tech-tag">CSS</li>
+                <li class="tech-tag">Planning de cours</li>
+                <li class="tech-tag">Infos pratiques</li>
               </ul>
 
               <div class="project-footer">
@@ -385,7 +373,7 @@
                   <span>Voir le projet</span>
                   <span aria-hidden="true">↗</span>
                 </a>
-                <span class="project-status-note">Consultation rapide des créneaux sur smartphone</span>
+                <span class="project-status-note">Planning facile à lire sur smartphone</span>
               </div>
             </div>
           </article>
@@ -399,11 +387,10 @@
       <div class="container">
 
         <header class="section-header">
-          <div class="section-eyebrow">02 — Expertise</div>
-          <h2 class="section-title" id="services-title">Ce que je conçois pour vous</h2>
+          <div class="section-eyebrow">02 — Ce que je propose</div>
+          <h2 class="section-title" id="services-title">Ce que je peux faire pour vous</h2>
           <p class="section-desc">
-            Des prestations claires et ciblées, sans options superflues, pour répondre directement aux réalités de votre
-            marché.
+            Des solutions simples et bien faites, sans jargon inutile, adaptées à ce que vous souhaitez montrer.
           </p>
         </header>
 
@@ -411,57 +398,57 @@
 
           <div class="service-card">
             <div class="service-number" aria-hidden="true">01</div>
-            <h3 class="service-title">Sites vitrines sur mesure</h3>
+            <h3 class="service-title">Création de site vitrine</h3>
             <p class="service-text">
-              Pour écoles, cabinets, commerces et PME qui ont besoin d'une vitrine rassurante. Un site propre, qui
-              valorise vos services et permet à vos prospects de vous joindre immédiatement.
+              Pour présenter votre école, commerce ou activité. Un site clair et soigné, pour que vos visiteurs trouvent
+              vite ce qu'ils cherchent et vous contactent directement.
             </p>
             <ul class="service-features" role="list">
-              <li>Arborescence claire et hiérarchisée</li>
-              <li>Affichage impeccable sur tous les écrans</li>
-              <li>Intégration WhatsApp, Google Maps et appel direct</li>
+              <li>Pages simples et bien organisées</li>
+              <li>Affichage impeccable sur téléphone et PC</li>
+              <li>Bouton WhatsApp direct, téléphone et Google Maps</li>
             </ul>
           </div>
 
           <div class="service-card">
             <div class="service-number" aria-hidden="true">02</div>
-            <h3 class="service-title">Boutiques &amp; Catalogues WhatsApp</h3>
+            <h3 class="service-title">Site avec espace modifiable</h3>
             <p class="service-text">
-              Vendez directement en ligne sans forcer vos clients dakarois à passer par des tunnels de commande
-              compliqués. Le client choisit son article en FCFA et finalise la commande sur WhatsApp.
+              Si vous souhaitez mettre à jour vos articles, vos annonces ou vos produits vous-même, avec un espace
+              d'administration facile à prendre en main.
             </p>
             <ul class="service-features" role="list">
-              <li>Catalogue visuel sans temps de chargement</li>
-              <li>Prix affichés en Francs CFA (XOF)</li>
-              <li>Commande transmise avec référence en un clic</li>
+              <li>Gestion simple de vos textes et images</li>
+              <li>Recherche et tri pratique du contenu</li>
+              <li>Formulaire de contact et liaison WhatsApp</li>
             </ul>
           </div>
 
           <div class="service-card">
             <div class="service-number" aria-hidden="true">03</div>
-            <h3 class="service-title">Refonte &amp; Optimisation Mobile</h3>
+            <h3 class="service-title">Modernisation de site existant</h3>
             <p class="service-text">
-              Votre site actuel est trop lent, illisible sur téléphone ou dépassé visuellement ? Je reprends le code
-              pour éliminer les lenteurs et offrir une navigation fluide, même avec une faible couverture 3G/4G.
+              Votre site actuel est trop lent, vieillot ou difficile à lire sur smartphone ? Je le réorganise et
+              l'allège pour qu'il soit rapide et agréable à visiter.
             </p>
             <ul class="service-features" role="list">
-              <li>Allègement radical du poids des pages</li>
-              <li>Correction des bugs d'affichage sur mobile</li>
-              <li>Amélioration de votre score de rapidité Google</li>
+              <li>Chargement beaucoup plus rapide</li>
+              <li>Affichage corrigé pour les téléphones</li>
+              <li>Navigation plus claire pour vos visiteurs</li>
             </ul>
           </div>
 
           <div class="service-card">
             <div class="service-number" aria-hidden="true">04</div>
-            <h3 class="service-title">Maintenance &amp; Accompagnement</h3>
+            <h3 class="service-title">Aide et suivi après le lancement</h3>
             <p class="service-text">
-              Un site internet doit vivre. Je reste votre interlocuteur unique après la mise en ligne pour modifier un
-              tarif, ajouter une formation, publier un nouveau produit ou veiller à la sécurité.
+              Une fois le site en ligne, je reste à votre écoute si vous avez besoin de changer une info, un prix, une
+              photo, ou simplement d'un coup de main.
             </p>
             <ul class="service-features" role="list">
-              <li>Interlocuteur direct et réactif par téléphone</li>
-              <li>Sauvegardes et contrôle régulier de disponibilité</li>
-              <li>Tarifs d'intervention clairs et sans surprise</li>
+              <li>Contact direct par message ou appel</li>
+              <li>Ajustements rapides selon vos demandes</li>
+              <li>Conseils clairs pour vous aider</li>
             </ul>
           </div>
 
@@ -474,11 +461,10 @@
       <div class="container">
 
         <header class="section-header">
-          <div class="section-eyebrow">03 — Démarche</div>
-          <h2 class="section-title" id="process-title">Une méthode en 4 étapes simples</h2>
+          <div class="section-eyebrow">03 — Méthode</div>
+          <h2 class="section-title" id="process-title">Comment nous travaillons ensemble</h2>
           <p class="section-desc">
-            Pas de réunions interminables. Du début à la mise en ligne, les étapes sont balisées et vous gardez la
-            visibilité complète sur l'avancement.
+            Tout est clair et sans détour. Vous suivez facilement chaque étape, du premier message jusqu'au lancement.
           </p>
         </header>
 
@@ -490,11 +476,10 @@
               <span class="step-line" aria-hidden="true"></span>
             </div>
             <div class="step-content">
-              <h3 class="step-title">Cadrage &amp; Échange initial</h3>
+              <h3 class="step-title">On fait le point</h3>
               <p class="step-text">
-                Nous faisons le point sur votre activité, vos clients cibles (Sénégal ou diaspora/international) et vos
-                contenus existants (textes, photos, coordonnées). Nous définissons ensemble l'objectif prioritaire du
-                site.
+                On discute de votre projet, de ce que vous voulez montrer (textes, photos, coordonnées) et de ce qui
+                compte le plus pour vous.
               </p>
             </div>
           </li>
@@ -505,10 +490,10 @@
               <span class="step-line" aria-hidden="true"></span>
             </div>
             <div class="step-content">
-              <h3 class="step-title">Structure &amp; Direction visuelle</h3>
+              <h3 class="step-title">Organisation et mise en page</h3>
               <p class="step-text">
-                Je propose une arborescence claire et une composition typographique soignée. Nous validons les sections,
-                l'organisation des textes et les éléments d'appel à l'action avant d'écrire le code.
+                Je vous propose une disposition claire pour les textes et les menus. On valide ensemble l'organisation
+                avant que je commence à coder.
               </p>
             </div>
           </li>
@@ -519,10 +504,10 @@
               <span class="step-line" aria-hidden="true"></span>
             </div>
             <div class="step-content">
-              <h3 class="step-title">Développement artisanal &amp; Tests</h3>
+              <h3 class="step-title">Création du site et tests</h3>
               <p class="step-text">
-                Développement en HTML, CSS et JavaScript purs. Pas de plugins lourds. Je teste personnellement
-                l'affichage sur plusieurs tailles d'écrans et je vérifie la fluidité sur différents débits internet.
+                Je code le site de façon propre et légère. Je vérifie l'affichage sur téléphone et sur ordinateur pour
+                être sûr que tout marche bien.
               </p>
             </div>
           </li>
@@ -533,10 +518,10 @@
               <span class="step-line" aria-hidden="true"></span>
             </div>
             <div class="step-content">
-              <h3 class="step-title">Mise en ligne &amp; Passation</h3>
+              <h3 class="step-title">Mise en ligne et explications</h3>
               <p class="step-text">
-                Déploiement sur un hébergement rapide et sécurisé (ex. Netlify), configuration de votre nom de domaine
-                personnalisé et tests finaux. Vous recevez l'accès complet et les explications pour rester autonome.
+                Je mets votre site en ligne avec votre adresse web (nom de domaine). Je vous montre tout ce qu'il faut
+                savoir pour l'utiliser en toute sérénité.
               </p>
             </div>
           </li>
@@ -554,8 +539,8 @@
           <div class="photo-wrapper photo-wrapper--compact">
             <div class="photo-frame">
               <div class="photo-fallback" aria-hidden="true">MG</div>
-              <img src="images/moustapha1.jpg" alt="Moustapha Gueye, développeur web freelance" width="600" height="750"
-                loading="lazy" class="photo-img">
+              <img src="images/moustapha2.jpg?v=2" alt="Portrait de Moustapha Gueye, étudiant à l'ESCOA" width="600"
+                height="750" loading="lazy" class="photo-img">
             </div>
           </div>
 
@@ -565,12 +550,12 @@
               <span class="fact-value">Dakar, Sénégal (Keur Massar)</span>
             </div>
             <div class="fact-item">
-              <span class="fact-label">Langues de travail</span>
-              <span class="fact-value">Français • Wolof • Anglais</span>
+              <span class="fact-label">Formation</span>
+              <span class="fact-value">Étudiant à l'ESCOA (face UCAD)</span>
             </div>
             <div class="fact-item">
               <span class="fact-label">Spécialité</span>
-              <span class="fact-value">Front-end léger &amp; Mobile-first</span>
+              <span class="fact-value">Sites légers &amp; adaptés mobiles</span>
             </div>
             <div class="fact-item">
               <span class="fact-label">Contact direct</span>
@@ -583,48 +568,47 @@
 
         <!-- Colonne texte éditorial -->
         <div class="about-narrative">
-          <div class="section-eyebrow">04 — Identité &amp; Philosophie</div>
-          <h2 class="section-title" id="about-title">L'artisanat du web bien fait</h2>
+          <div class="section-eyebrow">04 — Qui suis-je ?</div>
+          <h2 class="section-title" id="about-title">Apprendre et créer pour le web</h2>
 
           <div class="about-prose">
             <p>
-              Je m'appelle <strong>Moustapha Gueye</strong>. Je suis développeur web freelance basé à Dakar. Mon métier
-              consiste à créer des sites internet rapides, élégants et immédiatement compréhensibles pour vos clients.
+              Je m'appelle <strong>Moustapha Gueye</strong>. Je suis étudiant à l'ESCOA, située juste en face de l'UCAD
+              à Dakar. Passionné par le numérique, je crée des sites internet simples, rapides et faciles à utiliser.
             </p>
             <p>
-              Au Sénégal comme à l'étranger, plus de 80% des consultations se font sur téléphone. Pourtant, beaucoup de
-              sites restent trop lourds, encombrés d'animations gadgets ou d'extensions qui ralentissent le chargement
-              et font fuir les visiteurs.
+              Au Sénégal, presque tout le monde navigue sur son téléphone. Pourtant, beaucoup de sites sont trop lourds
+              ou difficiles à ouvrir avec une petite connexion. C'est pour cela que je fais attention à ce que mes pages
+              soient légères et s'ouvrent sans attendre.
             </p>
             <p>
-              Ma démarche est inverse : j'écris du code propre et sans intermédiaire superflu. Chaque page est légère,
-              chaque bouton réagit sans délai, et l'expérience reste fluide même avec une connexion ralentie.
+              Je privilégie un code propre et direct, sans fioritures inutiles. Chaque bouton réagit vite et vos
+              visiteurs peuvent vous contacter sans chercher pendant des heures.
             </p>
             <p>
-              Que vous dirigiez une école, un commerce d'électronique, une agence immobilière ou un cabinet de services,
-              je conçois votre outil de travail numérique avec la rigueur d'un développeur et le soin d'un designer.
+              Que vous ayez une école, une boutique, des services à présenter ou une idée personnelle à lancer, je mets
+              toute mon attention à vous créer un site propre et fonctionnel.
             </p>
           </div>
 
           <!-- Stack technique concrète -->
           <div class="about-stack">
-            <h3 class="stack-heading">Mes fondamentaux techniques</h3>
+            <h3 class="stack-heading">Ce que j'utilise pour travailler</h3>
             <div class="stack-tags">
-              <span class="stack-badge">HTML5 Sémantique</span>
-              <span class="stack-badge">CSS3 &amp; Flexbox/Grid</span>
-              <span class="stack-badge">JavaScript Moderne</span>
-              <span class="stack-badge">Performance &amp; Accessibilité</span>
-              <span class="stack-badge">Intégration WhatsApp Business</span>
-              <span class="stack-badge">Déploiement Continu (Netlify / Git)</span>
+              <span class="stack-badge">HTML5</span>
+              <span class="stack-badge">CSS3 &amp; Mise en page</span>
+              <span class="stack-badge">JavaScript</span>
+              <span class="stack-badge">Sites adaptés aux mobiles</span>
+              <span class="stack-badge">Contact WhatsApp direct</span>
+              <span class="stack-badge">Mise en ligne rapide</span>
             </div>
           </div>
 
           <div class="about-cta-box">
-            <p class="cta-box-text">Un projet en tête à Dakar ou ailleurs ? Échangeons directement sur vos besoins
-              réels.</p>
+            <p class="cta-box-text">Vous avez un projet en tête ou une question ? Discutons-en simplement, je vous répondrai avec plaisir.</p>
             <a href="https://wa.me/221774409492" class="btn btn-primary btn-sm" target="_blank"
               rel="noopener noreferrer">
-              <span>Discuter sur WhatsApp</span>
+              <span>M'écrire sur WhatsApp</span>
               <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -634,28 +618,29 @@
       </div>
     </section>
 
-    <!-- ========== SECTION : TARIFS ========== -->
+    <!-- ========== SECTION : TARIFS / OFFRES ========== -->
     <section class="section-pricing" id="tarifs" aria-labelledby="pricing-title">
       <div class="container">
 
         <header class="section-header">
-          <div class="section-eyebrow">05 — Tarifs indicatifs</div>
-          <h2 class="section-title" id="pricing-title">Des tarifs transparents, en Francs CFA</h2>
+          <div class="section-eyebrow">05 — Mes formules</div>
+          <h2 class="section-title" id="pricing-title">Des formules claires, en Francs CFA</h2>
           <p class="section-desc">
-            Pas de mauvaise surprise. Ces montants vous permettent d'estimer votre budget de départ ; un devis ferme et
-            détaillé vous est remis après notre premier échange.
+            En tant qu'étudiant, je propose des tarifs simples et accessibles. Ces montants vous donnent une bonne idée
+            du budget pour démarrer.
           </p>
         </header>
 
         <div class="pricing-grid">
 
-          <!-- Formule 1 -->
+          <!-- Carte A : Site vitrine -->
           <div class="pricing-card">
-            <div class="pricing-badge">Lancement rapide</div>
-            <h3 class="pricing-plan">Site One-Page / Landing Page</h3>
-            <p class="pricing-desc">Pour lancer une activité, présenter un produit phare ou capturer des contacts
-              qualifiés.</p>
+            <div class="pricing-badge">SITE VITRINE</div>
+            <h3 class="pricing-plan">Site vitrine</h3>
+            <p class="pricing-desc">Idéal pour présenter votre activité, vos services ou votre commerce avec une belle
+              visibilité en ligne.</p>
 
+            <!-- PRIX À AJUSTER -->
             <div class="pricing-cost">
               <span class="cost-prefix">À partir de</span>
               <span class="cost-amount">180 000</span>
@@ -663,47 +648,25 @@
             </div>
 
             <ul class="pricing-features" role="list">
-              <li>Page unique structurée en sections stratégiques</li>
-              <li>Design responsive optimisé smartphones</li>
+              <li>Site de 4 à 6 pages (accueil, à propos, services, contact...)</li>
+              <li>Mise en page soignée avec vos textes et photos</li>
+              <li>Affichage rapide et optimisé pour téléphone</li>
               <li>Bouton WhatsApp direct et formulaire de contact</li>
-              <li>Configuration nom de domaine &amp; hébergement</li>
-              <li>Livraison sous 7 à 10 jours ouvrés</li>
+              <li>Aide pour l'adresse du site et l'hébergement</li>
+              <li>Prêt en 2 à 3 semaines</li>
             </ul>
 
-            <a href="#contact" class="btn btn-outline pricing-btn">Demander cette formule</a>
+            <a href="#contact" class="btn btn-primary pricing-btn">Choisir cette formule</a>
           </div>
 
-          <!-- Formule 2 (Mise en avant) -->
-          <div class="pricing-card pricing-card--featured">
-            <div class="pricing-badge pricing-badge--gold">Recommandé pour PME</div>
-            <h3 class="pricing-plan">Site Vitrine Multi-pages</h3>
-            <p class="pricing-desc">La solution complète pour écoles, cabinets, agences et entreprises de services.</p>
-
-            <div class="pricing-cost">
-              <span class="cost-prefix">À partir de</span>
-              <span class="cost-amount">350 000</span>
-              <span class="cost-currency">FCFA</span>
-            </div>
-
-            <ul class="pricing-features" role="list">
-              <li>3 à 6 pages personnalisées (Accueil, Services, À propos, etc.)</li>
-              <li>Architecture de contenu soignée et hiérarchisée</li>
-              <li>Intégration carte Google Maps et formulaires sécurisés</li>
-              <li>Optimisation de la vitesse de chargement (&lt; 2 secondes)</li>
-              <li>Référencement local (SEO Google de base)</li>
-              <li>Livraison sous 2 à 3 semaines</li>
-            </ul>
-
-            <a href="#contact" class="btn btn-primary pricing-btn">Lancer mon site vitrine</a>
-          </div>
-
-          <!-- Formule 3 -->
+          <!-- Carte B : Site dynamique -->
           <div class="pricing-card">
-            <div class="pricing-badge">Vente directe</div>
-            <h3 class="pricing-plan">Catalogue &amp; E-commerce WhatsApp</h3>
-            <p class="pricing-desc">Pour commerçants et boutiques souhaitant vendre en ligne avec encaissement direct.
-            </p>
+            <div class="pricing-badge">SITE DYNAMIQUE</div>
+            <h3 class="pricing-plan">Site dynamique</h3>
+            <p class="pricing-desc">Pour ceux qui ont besoin d'un site vivant avec du contenu à mettre à jour soi-même
+              régulièrement.</p>
 
+            <!-- PRIX À AJUSTER -->
             <div class="pricing-cost">
               <span class="cost-prefix">À partir de</span>
               <span class="cost-amount">550 000</span>
@@ -711,15 +674,15 @@
             </div>
 
             <ul class="pricing-features" role="list">
-              <li>Catalogue produits avec filtres et recherche</li>
-              <li>Fiches articles détaillées avec affichage en FCFA</li>
-              <li>Panier d'achat léger sans inscription obligatoire</li>
-              <li>Transmission de la commande pré-remplie sur WhatsApp</li>
-              <li>Formation à l'ajout de nouveaux produits</li>
-              <li>Livraison sous 3 à 4 semaines</li>
+              <li>Gestion facile de vos contenus (articles, produits, actus)</li>
+              <li>Espace administrateur simple pour modifier sans coder</li>
+              <li>Recherche et tri pour retrouver vos éléments</li>
+              <li>Formulaire et contact direct par WhatsApp</li>
+              <li>Je vous montre comment utiliser votre espace</li>
+              <li>Prêt en 3 à 4 semaines</li>
             </ul>
 
-            <a href="#contact" class="btn btn-outline pricing-btn">Demander un devis e-commerce</a>
+            <a href="#contact" class="btn btn-outline pricing-btn">En savoir plus</a>
           </div>
 
         </div>
@@ -727,9 +690,9 @@
         <!-- Note d'honnêteté budgétaire -->
         <div class="pricing-clarification">
           <p>
-            <strong>Note sur les frais tiers :</strong> L'achat du nom de domaine (.sn ou .com) et l'hébergement annuel
-            restent à la charge du client (généralement entre 15 000 et 35 000 FCFA/an). Je vous guide pas à pas pour
-            que tout reste à votre propre nom.
+            <strong>Bon à savoir :</strong> L'adresse du site (le nom de domaine comme .sn ou .com) et l'hébergement
+            annuel se règlent directement auprès des services spécialisés (en général entre 15 000 et 35 000 FCFA par
+            an). Je vous guide pas à pas pour que tout reste bien à votre nom.
           </p>
         </div>
 
@@ -741,11 +704,11 @@
       <div class="container">
 
         <header class="section-header">
-          <div class="section-eyebrow">06 — Démarrer</div>
+          <div class="section-eyebrow">06 — Me contacter</div>
           <h2 class="section-title" id="contact-title">Parlons de votre projet</h2>
           <p class="section-desc">
-            Vous avez une idée précise ou besoin d'un conseil pour débuter ? Écrivez-moi ou appelez-moi directement. Je
-            vous réponds sous 24h.
+            Vous avez une idée, une question ou besoin d'un site ? Écrivez-moi ou appelez-moi directement. Je vous
+            réponds très rapidement.
           </p>
         </header>
 
@@ -753,8 +716,8 @@
 
           <!-- Coordonnées directes et disponibilité -->
           <div class="contact-info">
-            <h3 class="contact-info-title">Canaux directs</h3>
-            <p class="contact-info-sub">Privilégiez WhatsApp pour une réponse rapide dans la journée.</p>
+            <h3 class="contact-info-title">Me joindre directement</h3>
+            <p class="contact-info-sub">Le plus rapide est de m'écrire sur WhatsApp.</p>
 
             <ul class="contact-channels" role="list">
               <li class="channel-card">
@@ -762,46 +725,46 @@
                 <a href="https://wa.me/221774409492" class="channel-link" target="_blank" rel="noopener noreferrer">
                   +221 77 440 94 92
                 </a>
-                <span class="channel-hint">Disponible pour appels et notes vocales</span>
+                <span class="channel-hint">Idéal pour discuter ou m'envoyer un message vocal</span>
               </li>
 
               <li class="channel-card">
-                <span class="channel-label">Courrier électronique</span>
+                <span class="channel-label">Adresse email</span>
                 <a href="mailto:gmoustapha0805@gmail.com" class="channel-link">
                   gmoustapha0805@gmail.com
                 </a>
-                <span class="channel-hint">Pour dossiers, cahiers des charges et devis</span>
+                <span class="channel-hint">Pour m'envoyer vos documents ou un descriptif</span>
               </li>
 
               <li class="channel-card">
-                <span class="channel-label">Base géographique</span>
-                <span class="channel-static">Dakar, Sénégal (Keur Massar)</span>
-                <span class="channel-hint">Rendez-vous possibles sur Dakar ou à distance</span>
+                <span class="channel-label">Où me trouver</span>
+                <span class="channel-static">Dakar, Sénégal (Keur Massar &amp; ESCOA face UCAD)</span>
+                <span class="channel-hint">On peut s'appeler ou se rencontrer à Dakar</span>
               </li>
             </ul>
 
             <div class="contact-guarantees">
               <div class="guarantee-item">
                 <span class="guarantee-icon" aria-hidden="true">✓</span>
-                <span>Devis gratuit, clair et sans engagement</span>
+                <span>Échange gratuit et sans engagement</span>
               </div>
               <div class="guarantee-item">
                 <span class="guarantee-icon" aria-hidden="true">✓</span>
-                <span>Interlocuteur unique de bout en bout</span>
+                <span>Vous discutez directement avec moi</span>
               </div>
               <div class="guarantee-item">
                 <span class="guarantee-icon" aria-hidden="true">✓</span>
-                <span>Code remis intégralement avec pleine propriété</span>
+                <span>Votre site vous appartient à 100%</span>
               </div>
             </div>
           </div>
 
           <!-- Formulaire de contact direct WhatsApp & Email (sans saisie d'email) -->
           <div class="contact-form-wrapper">
-            <h3 class="form-title">Démarrer un échange direct</h3>
+            <h3 class="form-title">Envoyez-moi un message</h3>
             <p class="form-intro">
-              Renseignez simplement votre nom et numéro. Votre demande est instantanément formatée pour un échange
-              direct sur WhatsApp (ou par email en un clic).
+              Indiquez votre nom et votre numéro. Votre message est immédiatement prêt pour un échange sur WhatsApp (ou
+              par email en un clic).
             </p>
 
             <form class="contact-form" id="contact-form" novalidate>
@@ -828,11 +791,11 @@
                 <div class="form-group">
                   <label for="form-project-type" class="form-label">Type de projet</label>
                   <select id="form-project-type" name="project_type" class="form-select">
-                    <option value="Site vitrine d'entreprise">Site vitrine d'entreprise</option>
-                    <option value="Boutique / Catalogue WhatsApp">Boutique / Catalogue WhatsApp</option>
-                    <option value="Site d'école ou institut">Site d'école ou institut</option>
-                    <option value="Refonte de site existant">Refonte de site existant</option>
-                    <option value="Autre demande spécifique">Autre demande spécifique</option>
+                    <option value="Site vitrine">Site vitrine</option>
+                    <option value="Site dynamique">Site dynamique</option>
+                    <option value="Site pour une école">Site pour une école</option>
+                    <option value="Améliorer un site existant">Améliorer un site existant</option>
+                    <option value="Autre projet">Autre projet</option>
                   </select>
                 </div>
 
@@ -848,10 +811,10 @@
               </div>
 
               <div class="form-group">
-                <label for="form-message" class="form-label">Description rapide de votre besoin <span class="required"
+                <label for="form-message" class="form-label">Votre message en quelques mots <span class="required"
                     aria-hidden="true">*</span></label>
                 <textarea id="form-message" name="message" rows="4" class="form-textarea"
-                  placeholder="Parlez-moi de votre activité, de vos attentes et de vos délais prévus..."
+                  placeholder="Expliquez-moi votre idée, ce que vous souhaitez présenter et vos délais..."
                   required></textarea>
                 <span class="form-error" id="message-error" aria-live="polite"></span>
               </div>
@@ -866,16 +829,16 @@
                     <path
                       d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662a11.835 11.835 0 005.712 1.447h.005c6.554 0 11.89-5.336 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                   </svg>
-                  <span>Envoyer directement sur WhatsApp</span>
+                  <span>Envoyer sur WhatsApp</span>
                   <span class="btn-arrow" aria-hidden="true">→</span>
                 </button>
                 <button type="button" class="btn btn-secondary btn-block btn-email-alt" id="form-submit-email">
-                  <span>Ou transmettre par Email classique</span>
+                  <span>Ou m'écrire par Email</span>
                 </button>
               </div>
 
               <p class="form-privacy-note">
-                <span>Direct &amp; confidentiel : aucune inscription ni démarchage commercial.</span>
+                <span>Simple et direct : pas d'inscription, juste un échange entre nous.</span>
               </p>
 
             </form>
@@ -896,18 +859,17 @@
         <div class="footer-identity">
           <span class="footer-brand">Moustapha Gueye</span>
           <p class="footer-tagline">
-            Développeur web freelance à Dakar. Création de sites vitrines et e-commerce sur mesure pour PME au Sénégal
-            et à l'international.
+            Étudiant à l'ESCOA, située en face de l'UCAD à Dakar. Je crée des sites web simples, rapides et faciles à
+            utiliser sur téléphone.
           </p>
         </div>
 
         <nav class="footer-nav" aria-label="Liens du pied de page">
           <ul class="footer-links">
-            <li><a href="#projets">Projets</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#process">Méthode</a></li>
+            <li><a href="#hero">Accueil</a></li>
             <li><a href="#a-propos">À propos</a></li>
-            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#tarifs">Offres</a></li>
+            <li><a href="#projets">Projets</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -915,7 +877,7 @@
 
       <div class="footer-bottom">
         <p class="footer-copy">
-          &copy; 2026 Moustapha Gueye. Tous droits réservés. Code artisanal fait main à Dakar, Sénégal.
+          &copy; 2026 Moustapha Gueye. Tous droits réservés. Codé avec soin à Dakar, Sénégal.
         </p>
         <div class="footer-actions">
           <a href="#hero" class="back-to-top" aria-label="Remonter en haut de page">
@@ -933,17 +895,75 @@
     <a href="https://wa.me/221774409492?text=Bonjour%20Moustapha,%20je%20souhaite%20échanger%20avec%20vous%20concernant%20un%20projet%20web."
       class="whatsapp-btn" target="_blank" rel="noopener noreferrer"
       aria-label="Discuter directement sur WhatsApp avec Moustapha Gueye">
-      <!-- Icône SVG WhatsApp officielle simplifiée -->
       <svg class="whatsapp-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="currentColor">
         <path
           d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662a11.835 11.835 0 005.712 1.447h.005c6.554 0 11.89-5.336 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-      </svg>
-      <span class="whatsapp-tooltip">Échanger sur WhatsApp</span>
-    </a>
-  </aside>
+        </svg>
+        <span class="whatsapp-tooltip">M'écrire sur WhatsApp</span>
+      </a>
+    </aside>
 
-  <!-- Script JavaScript unique -->
-  <script src="main.js"></script>
+  <!-- Script JavaScript -->
+  <script src="js/main.js?v=6"></script>
+  <!-- Script menu mobile -->
+  <script>
+  (function() {
+    var btn     = document.getElementById('menu-toggle');
+    var drawer  = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+
+    if (!btn || !drawer) return;
+
+    function openMenu() {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      overlay.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      overlay.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    // Burger toggle
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (drawer.classList.contains('is-open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Clic overlay → fermer
+    overlay.addEventListener('click', closeMenu);
+
+    // Clic lien → fermer + scroll
+    drawer.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        closeMenu();
+      });
+    });
+
+    // Échap → fermer
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        closeMenu();
+        btn.focus();
+      }
+    });
+
+    // Resize → fermer
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) closeMenu();
+    });
+  })();
+  </script>
 
 </body>
 

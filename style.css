@@ -2,7 +2,7 @@
   =============================================================================
   PROJET   : Portfolio Moustapha Gueye — Développeur Web Freelance (Dakar)
   FICHIER  : css/style.css
-  RÔLE     : Feuille de styles principale (Design artisanal, sans framework)
+  RÔLE     : Feuille de styles principale (Design sobre, thème clair & chaud)
   AUTEUR   : Moustapha Gueye
   =============================================================================
   SOMMAIRE :
@@ -10,66 +10,37 @@
     02. Reset & Règles de base
     03. Typographie
     04. Composants réutilisables (Boutons, Badges, Cartes)
-    05. Navbar & En-tête
+    05. Navbar, Overlay & Drawer Mobile
     06. Hero
-    07. Projets (Études de cas typographiques)
+    07. Projets sélectionnés
     08. Services
-    09. Process (4 étapes)
+    09. Process (Méthode en 4 étapes)
     10. À propos & Profil
-    11. Tarifs indicatifs en FCFA
+    11. Tarifs indicatifs (Offres)
     12. Formulaire & Canaux de contact
     13. Footer & Bouton WhatsApp flottant
-    14. Animations & Micro-interactions
-    15. Responsive (Media queries regroupées)
+    14. Responsive (Media queries)
   =============================================================================
 */
 
-
 /* =============================================================================
    01. VARIABLES & SYSTÈME DE DESIGN
-   Palette sombre chaude (fond café/noir profond), accent or artisanal,
-   hiérarchie d'espacements fluide basée sur un pas régulier.
+   Palette stricte : Thème clair et chaud, blanc + bleu.
    ============================================================================= */
 :root {
-  /* Couleurs de fond (thème sombre chaud, anti-froid) */
-  --color-bg: #121110;
-  --color-surface: #1a1816;
-  --color-surface-elevated: #23201c;
-  --color-surface-hover: #2b2722;
-
-  /* Lignes, bordures & séparateurs discrets */
-  --color-border: #2e2924;
-  --color-border-light: #3d3630;
-  --color-border-subtle: rgba(244, 239, 232, 0.08);
-
-  /* Typographie & niveaux de contraste (norme WCAG AA respectée) */
-  --color-text: #f4efe8;
-  --color-text-muted: #a3998e;
-  --color-text-dim: #71675c;
-
-  /* Accentuation or sobre (sans saturation excessive, inspirée de l'artisanat) */
-  --color-gold: #cba258;
-  --color-gold-hover: #dfb76c;
-  --color-gold-muted: rgba(203, 162, 88, 0.12);
-  --color-gold-border: rgba(203, 162, 88, 0.35);
-
-  /* Nuance d'état */
-  --color-success: #4ea873;
-  --color-error: #df6b6b;
-
-  /* Palettes propres aux projets (identités visuelles dédiées) */
-  --project-isef-bg: #101c2e;
-  --project-isef-accent: #c9a227;
-  --project-electronics-bg: #211b14;
-  --project-electronics-accent: #d99a4e;
-  --project-realestate-bg: #121f17;
-  --project-realestate-accent: #78a37f;
-  --project-fitness-bg: #1b191a;
-  --project-fitness-accent: #c5a059;
+  /* Couleurs de la charte */
+  --blanc: #FFFFFF;
+  --fond: #FBF8F3;
+  --bleu: #2457C5;
+  --bleu-fonce: #163A8A;
+  --bleu-moyen: #6C93E0;
+  --bleu-pale: #E4ECFA;
+  --texte: #1B2438;
+  --texte-secondaire: #5B6478;
 
   /* Typographies */
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-title: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Espacements normalisés */
   --space-2xs: 0.25rem;
@@ -82,23 +53,20 @@
   --space-3xl: 4.5rem;
   --space-4xl: 6rem;
 
-  /* Rayons de courbure (très discrets pour préserver la rigueur éditoriale) */
-  --radius-sm: 3px;
+  /* Rayons de courbure (8px maximum) */
+  --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-lg: 8px;
 
-  /* Transitions fluides */
-  --transition-fast: 160ms cubic-bezier(0.2, 0, 0, 1);
-  --transition-normal: 260ms cubic-bezier(0.2, 0, 0, 1);
+  /* Transition douce de 0.2s sur boutons et liens */
+  --transition: 0.2s ease;
 
   /* Largeur de conteneur maximale */
   --container-max: 1180px;
 }
 
-
 /* =============================================================================
    02. RESET & RÈGLES DE BASE
-   Fondations solides évitant tout défilement horizontal parasite.
    ============================================================================= */
 *,
 *::before,
@@ -112,15 +80,14 @@ html {
   font-size: 100%;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  color-scheme: dark;
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
+  background-color: var(--fond);
+  color: var(--texte);
+  font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.6;
   letter-spacing: -0.01em;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -138,7 +105,7 @@ svg {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color var(--transition);
 }
 
 button,
@@ -165,21 +132,21 @@ ol {
   position: absolute;
   top: -100px;
   left: 1rem;
-  background-color: var(--color-gold);
-  color: #0d0c0a;
+  background-color: var(--bleu);
+  color: var(--blanc);
   padding: var(--space-sm) var(--space-md);
   font-weight: 600;
   border-radius: var(--radius-sm);
   z-index: 1000;
-  transition: top var(--transition-fast);
+  transition: top var(--transition);
 }
 
 .skip-link:focus {
   top: 1rem;
-  outline: 2px solid var(--color-text);
+  outline: 2px solid var(--bleu-fonce);
 }
 
-/* Conteneur global centré */
+/* Conteneur global */
 .container {
   width: 100%;
   max-width: var(--container-max);
@@ -187,63 +154,63 @@ ol {
   padding-inline: 1.25rem;
 }
 
-
 /* =============================================================================
    03. TYPOGRAPHIE
-   Rythme éditorial : titres serif chaleureux, textes sans-serif fonctionnels.
+   Titres en Bricolage Grotesque, textes en Instrument Sans, alignés à gauche.
    ============================================================================= */
 h1,
 h2,
 h3,
 h4 {
-  color: var(--color-text);
-  font-family: var(--font-serif);
-  font-weight: 600;
-  line-height: 1.2;
+  color: var(--bleu-fonce);
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.25;
   letter-spacing: -0.02em;
+  text-align: left;
 }
 
 p {
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
+  line-height: 1.6;
+  text-align: left;
 }
 
 strong {
-  color: var(--color-text);
+  color: var(--texte);
   font-weight: 600;
 }
 
-/* En-tête de section standardisé */
+/* En-tête de section */
 .section-header {
   margin-bottom: var(--space-2xl);
   max-width: 720px;
+  text-align: left;
 }
 
 .section-eyebrow {
   display: inline-block;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-gold);
+  color: var(--bleu);
   margin-bottom: var(--space-xs);
 }
 
 .section-title {
   font-size: clamp(1.85rem, 3.5vw, 2.75rem);
   margin-bottom: var(--space-sm);
+  color: var(--bleu-fonce);
 }
 
 .section-desc {
   font-size: 1.0625rem;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
-
 /* =============================================================================
-   04. COMPOSANTS RÉUTILISABLES
-   Boutons contrastés, badges et contours d'identité sans artifice plastique.
+   04. COMPOSANTS RÉUTILISABLES (BOUTONS, BADGES, CARTES)
    ============================================================================= */
 .btn {
   display: inline-flex;
@@ -251,13 +218,12 @@ strong {
   justify-content: center;
   gap: var(--space-xs);
   padding: 0.85rem 1.65rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   text-align: center;
-  transition: all var(--transition-normal);
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition);
   white-space: nowrap;
 }
 
@@ -271,55 +237,54 @@ strong {
 }
 
 .btn-primary {
-  background-color: var(--color-gold);
-  color: #0f0e0c;
-  border: 1px solid var(--color-gold);
+  background-color: var(--bleu);
+  color: var(--blanc);
+  border: 1px solid var(--bleu);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background-color: var(--color-gold-hover);
-  border-color: var(--color-gold-hover);
-  transform: translateY(-1px);
+  background-color: var(--bleu-fonce);
+  border-color: var(--bleu-fonce);
+  color: var(--blanc);
 }
 
 .btn-secondary {
-  background-color: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-border-light);
+  background-color: var(--blanc);
+  color: var(--bleu-fonce);
+  border: 1px solid var(--bleu-pale);
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus-visible {
-  border-color: var(--color-text-muted);
-  background-color: var(--color-surface);
+  border-color: var(--bleu-moyen);
+  background-color: var(--bleu-pale);
 }
 
 .btn-outline {
   background-color: transparent;
-  color: var(--color-gold);
-  border: 1px solid var(--color-gold-border);
+  color: var(--bleu);
+  border: 1px solid var(--bleu);
 }
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
-  background-color: var(--color-gold-muted);
-  border-color: var(--color-gold);
+  background-color: var(--bleu-pale);
+  border-color: var(--bleu-fonce);
+  color: var(--bleu-fonce);
 }
 
 .btn-arrow {
   display: inline-block;
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition);
 }
 
 .btn:hover .btn-arrow {
   transform: translateX(3px);
 }
 
-
 /* =============================================================================
-   05. NAVBAR
-   Navigation fixe discrète au scroll avec effet d'atténuation supérieur.
+   05. NAVBAR, OVERLAY & DRAWER
    ============================================================================= */
 .site-header {
   position: fixed;
@@ -328,17 +293,14 @@ strong {
   right: 0;
   z-index: 100;
   padding-block: var(--space-md);
-  background-color: rgba(18, 17, 16, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition-normal), background-color var(--transition-normal), padding var(--transition-normal);
+  background-color: var(--fond);
+  border-bottom: 1px solid var(--bleu-pale);
+  transition: padding var(--transition), box-shadow var(--transition);
 }
 
 .site-header.is-scrolled {
   padding-block: var(--space-sm);
-  background-color: rgba(18, 17, 16, 0.96);
-  border-bottom-color: var(--color-border);
+  box-shadow: 0 2px 12px rgba(22, 58, 138, 0.07);
 }
 
 .header-container {
@@ -348,16 +310,16 @@ strong {
   gap: var(--space-md);
 }
 
-/* Identité textuelle */
 .brand {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.25rem;
-  font-family: var(--font-serif);
+  gap: 0.35rem;
+  font-family: var(--font-title);
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--color-text);
+  color: var(--bleu-fonce);
+  text-decoration: none;
 }
 
 .brand-dot {
@@ -365,108 +327,198 @@ strong {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--color-gold);
+  background-color: var(--bleu);
 }
 
-/* Badge de statut direct */
 .availability-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.75rem;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
   border-radius: 50px;
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
 .status-pulse {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--color-success);
-  box-shadow: 0 0 0 0 rgba(78, 168, 115, 0.7);
-  animation: pulse-ring 2.4s infinite;
+  background-color: #25D366;
 }
 
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(78, 168, 115, 0.7);
-  }
-
-  70% {
-    box-shadow: 0 0 0 6px rgba(78, 168, 115, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(78, 168, 115, 0);
-  }
-}
-
-/* Liste des liens de navigation desktop */
-.nav-list {
+/* Desktop nav (visible >= 768px) */
+.nav-desktop {
   display: flex;
   align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: var(--space-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-link {
+  font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--color-text-muted);
-  position: relative;
+  color: var(--texte-secondaire);
   padding-block: var(--space-2xs);
+  text-decoration: none;
+  transition: color var(--transition);
 }
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  color: var(--color-text);
+  color: var(--bleu);
 }
 
-.nav-link.is-active {
-  color: var(--color-gold);
-}
-
-/* Bouton hamburger mobile */
+/* Burger (cach\00e9 sur desktop) */
 .menu-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
+  gap: 5px;
   width: 44px;
   height: 44px;
-  padding: 10px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  cursor: pointer;
+  position: fixed;
+  top: 0.65rem;
+  right: 1rem;
+  z-index: 10002;
+  transition: background-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background-color: var(--bleu-pale);
 }
 
 .menu-bar {
   display: block;
-  width: 100%;
+  width: 20px;
   height: 2px;
-  background-color: var(--color-text);
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  background-color: var(--bleu-fonce);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .menu-toggle[aria-expanded="true"] .menu-bar:nth-child(1) {
-  transform: translateY(4px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .menu-toggle[aria-expanded="true"] .menu-bar:nth-child(2) {
-  transform: translateY(-4px) rotate(-45deg);
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Overlay (directement dans body, HORS du header) */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 18, 40, 0.5);
+  z-index: 10000;
+}
+
+.nav-overlay.is-open {
+  display: block;
+}
+
+/* Drawer mobile (directement dans body, HORS du header) */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--blanc);
+  box-shadow: -8px 0 30px rgba(10, 18, 40, 0.2);
+  z-index: 10001;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 1.75rem 2rem;
+  overflow-y: auto;
+}
+
+.nav-drawer.is-open {
+  transform: translateX(0);
+}
+
+.drawer-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.drawer-item {
+  border-bottom: 1px solid var(--bleu-pale);
+}
+
+.drawer-item:last-child {
+  border-bottom: none;
+}
+
+.drawer-link {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--texte);
+  text-decoration: none;
+  padding: 1rem 0;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.drawer-link:hover,
+.drawer-link:active {
+  color: var(--bleu);
+  padding-left: 8px;
+}
+
+.drawer-cta-item {
+  border-bottom: none;
+  margin-top: var(--space-lg);
+}
+
+.drawer-cta-btn {
+  display: block;
+  text-align: center;
+  width: 100%;
 }
 
 
 /* =============================================================================
-   06. HERO
-   Mise en page asymétrique : typographie affirmée et cadre portrait sobre.
+   06. HERO (Fond : --fond)
    ============================================================================= */
 .section-hero {
   padding-top: calc(var(--space-4xl) + 2rem);
   padding-bottom: var(--space-3xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--fond);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .hero-grid {
@@ -482,9 +534,7 @@ strong {
   gap: var(--space-xs);
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-gold);
+  color: var(--bleu);
   margin-bottom: var(--space-md);
 }
 
@@ -492,20 +542,20 @@ strong {
   display: inline-block;
   width: 24px;
   height: 1px;
-  background-color: var(--color-gold);
+  background-color: var(--bleu);
 }
 
 .hero-title {
   font-size: clamp(2.25rem, 4.6vw, 3.65rem);
   line-height: 1.15;
   margin-bottom: var(--space-lg);
-  color: var(--color-text);
+  color: var(--bleu-fonce);
 }
 
 .hero-lead {
   font-size: clamp(1.0625rem, 1.8vw, 1.2rem);
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
   margin-bottom: var(--space-xl);
   max-width: 640px;
 }
@@ -524,9 +574,9 @@ strong {
   align-items: center;
   gap: var(--space-lg);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--bleu-pale);
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
 .hero-perk-item {
@@ -536,11 +586,11 @@ strong {
 }
 
 .perk-bullet {
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: 700;
 }
 
-/* Cadrage photo sobre avec décalage de liseré or artisanal */
+/* Portrait photo sobre sur fond clair */
 .photo-wrapper {
   position: relative;
   width: 100%;
@@ -548,47 +598,28 @@ strong {
   margin-inline: auto;
 }
 
-/* Liseré or décalé derrière la photo */
-.photo-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 12px -12px -12px 12px;
-  border: 1px solid var(--color-gold-border);
-  border-radius: var(--radius-sm);
-  z-index: 0;
-  pointer-events: none;
-  transition: transform var(--transition-normal);
-}
-
-.photo-wrapper:hover::before {
-  transform: translate(3px, 3px);
-}
-
 .photo-frame {
   position: relative;
-  z-index: 1;
   aspect-ratio: 4 / 5;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--bleu-pale);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Fallback visible si moustapha.jpg n'est pas encore présent */
 .photo-fallback {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  font-family: var(--font-serif);
+  font-family: var(--font-title);
   font-size: clamp(3.5rem, 8vw, 5rem);
-  font-weight: 600;
-  color: var(--color-gold);
-  background: radial-gradient(circle at center, #24201b 0%, #151311 100%);
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--bleu-fonce);
+  background-color: var(--bleu-pale);
   z-index: 1;
 }
 
@@ -603,141 +634,88 @@ strong {
 }
 
 .photo-caption {
-  position: relative;
-  z-index: 2;
   margin-top: var(--space-sm);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
+  color: var(--texte-secondaire);
   padding-inline: var(--space-2xs);
 }
 
 .caption-name {
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--bleu-fonce);
 }
 
+.caption-role {
+  color: var(--texte-secondaire);
+}
 
 /* =============================================================================
-   07. PROJETS (ÉTUDES DE CAS TYPOGRAPHIQUES SANS FAUX MOCKUPS)
-   Blocs textuels à fort impact graphique avec palette dédiée à chaque projet.
+   07. PROJETS SÉLECTIONNÉS (Fond : --blanc, Cartes : --bleu-pale)
    ============================================================================= */
 .section-projects {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--blanc);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .projects-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3xl);
+  gap: var(--space-2xl);
 }
 
 .project-card {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--bleu-pale);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color var(--transition-normal), transform var(--transition-normal);
 }
 
-.project-card:hover {
-  border-color: var(--color-border-light);
-  transform: translateY(-2px);
-}
-
-/* Zone visuelle purement typographique */
 .project-visual {
   position: relative;
   padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 280px;
-  border-right: 1px solid var(--color-border);
-  overflow: hidden;
+  min-height: 260px;
+  background-color: var(--blanc);
+  border-right: 1px solid var(--bleu-pale);
 }
 
 .project-number {
-  font-family: var(--font-serif);
-  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1;
-  opacity: 0.45;
-  letter-spacing: -0.04em;
+  color: var(--bleu-moyen);
+  opacity: 0.6;
 }
 
 .project-branding {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-2xs);
 }
 
 .project-tag-brand {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   font-weight: 600;
-  opacity: 0.75;
+  color: var(--texte-secondaire);
 }
 
 .project-typographic-name {
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
-  font-weight: 600;
-  line-height: 1.15;
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--bleu-fonce);
+  line-height: 1.2;
 }
 
-/* Palettes distinctes par projet */
-.project-card--isef .project-visual {
-  background: linear-gradient(135deg, var(--project-isef-bg) 0%, #0a111a 100%);
-  color: var(--project-isef-accent);
-}
-
-.project-card--isef .project-number {
-  color: var(--project-isef-accent);
-}
-
-.project-card--electronics .project-visual {
-  background: linear-gradient(135deg, var(--project-electronics-bg) 0%, #120f0c 100%);
-  color: var(--project-electronics-accent);
-}
-
-.project-card--electronics .project-number {
-  color: var(--project-electronics-accent);
-}
-
-.project-card--realestate .project-visual {
-  background: linear-gradient(135deg, var(--project-realestate-bg) 0%, #0a120d 100%);
-  color: var(--project-realestate-accent);
-}
-
-.project-card--realestate .project-number {
-  color: var(--project-realestate-accent);
-}
-
-.project-card--fitness .project-visual {
-  background: linear-gradient(135deg, var(--project-fitness-bg) 0%, #100f10 100%);
-  color: var(--project-fitness-accent);
-}
-
-.project-card--fitness .project-number {
-  color: var(--project-fitness-accent);
-}
-
-/* Zone image facultative (masquée ou prête à accueillir une vraie capture) */
-.project-screenshot {
-  margin-top: var(--space-md);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Corps éditorial du projet */
 .project-body {
   padding: var(--space-2xl) var(--space-xl);
   display: flex;
@@ -755,25 +733,24 @@ strong {
 }
 
 .project-type {
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .project-role {
-  color: var(--color-text-dim);
+  color: var(--texte-secondaire);
 }
 
 .project-title {
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  line-height: 1.25;
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  line-height: 1.3;
+  color: var(--bleu-fonce);
 }
 
 .project-summary {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.65;
-  color: var(--color-text-muted);
+  color: var(--texte);
 }
 
 .project-tech-list {
@@ -785,11 +762,11 @@ strong {
 .tech-tag {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--color-text-muted);
-  background-color: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
+  color: var(--texte);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
   padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 }
 
 .project-footer {
@@ -799,10 +776,9 @@ strong {
   flex-wrap: wrap;
   gap: var(--space-sm);
   padding-top: var(--space-md);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(108, 147, 224, 0.25);
 }
 
-/* Masquage automatique du bouton 'Voir le projet' si data-link est vide */
 .project-link[data-link=""],
 .project-link:not([data-link]) {
   display: none !important;
@@ -814,30 +790,30 @@ strong {
   gap: 0.4rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-gold);
-  border-bottom: 1px solid var(--color-gold-border);
+  color: var(--bleu);
+  border-bottom: 1px solid var(--bleu-moyen);
   padding-bottom: 2px;
+  transition: color var(--transition), border-color var(--transition);
 }
 
 .project-link:hover {
-  color: var(--color-gold-hover);
-  border-color: var(--color-gold-hover);
+  color: var(--bleu-fonce);
+  border-color: var(--bleu-fonce);
 }
 
 .project-status-note {
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
+  color: var(--texte-secondaire);
   font-style: italic;
 }
 
-
 /* =============================================================================
-   08. SERVICES
-   Grille asymétrique, descriptions concrètes orientées PME.
+   08. SERVICES (Fond : --fond, Cartes : --blanc)
    ============================================================================= */
 .section-services {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--fond);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .services-grid {
@@ -847,36 +823,32 @@ strong {
 }
 
 .service-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
-  transition: border-color var(--transition-normal);
-}
-
-.service-card:hover {
-  border-color: var(--color-border-light);
 }
 
 .service-number {
-  font-family: var(--font-serif);
+  font-family: var(--font-title);
   font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-gold);
+  font-weight: 700;
+  color: var(--bleu);
   margin-bottom: var(--space-md);
 }
 
 .service-title {
   font-size: 1.35rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-sm);
 }
 
 .service-text {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
   margin-bottom: var(--space-lg);
 }
 
@@ -886,9 +858,9 @@ strong {
   flex-direction: column;
   gap: 0.45rem;
   padding-top: var(--space-md);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--bleu-pale);
   font-size: 0.875rem;
-  color: var(--color-text);
+  color: var(--texte);
 }
 
 .service-features li {
@@ -900,24 +872,22 @@ strong {
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--color-gold);
+  color: var(--bleu);
 }
 
-
 /* =============================================================================
-   09. PROCESS (MÉTHODE EN 4 ÉTAPES)
-   Progression numérotée claire pour rassurer le client sur les livrables.
+   09. PROCESS (Fond : --blanc)
    ============================================================================= */
 .section-process {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--blanc);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-xl);
-  counter-reset: process-counter;
 }
 
 .process-step {
@@ -934,17 +904,17 @@ strong {
 }
 
 .step-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-title);
   font-size: 2rem;
   font-weight: 700;
-  color: var(--color-gold);
+  color: var(--bleu);
   line-height: 1;
 }
 
 .step-line {
   flex: 1;
   height: 1px;
-  background-color: var(--color-border);
+  background-color: var(--bleu-pale);
 }
 
 .process-step:last-child .step-line {
@@ -953,23 +923,23 @@ strong {
 
 .step-title {
   font-size: 1.15rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-xs);
 }
 
 .step-text {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
-
 /* =============================================================================
-   10. À PROPOS & PROFIL
-   Disposition éditoriale : portrait plus compact à gauche, vision à droite.
+   10. À PROPOS & PROFIL (Fond : --fond)
    ============================================================================= */
 .section-about {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--fond);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .about-layout {
@@ -990,9 +960,9 @@ strong {
 }
 
 .about-quickfacts {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
@@ -1003,7 +973,7 @@ strong {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--bleu-pale);
   padding-bottom: var(--space-xs);
 }
 
@@ -1014,24 +984,23 @@ strong {
 
 .fact-label {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: 600;
 }
 
 .fact-value {
   font-size: 0.9375rem;
-  color: var(--color-text);
+  color: var(--texte);
   font-weight: 500;
 }
 
 .fact-link {
-  color: var(--color-text);
+  color: var(--texte);
+  transition: color var(--transition);
 }
 
 .fact-link:hover {
-  color: var(--color-gold);
+  color: var(--bleu);
 }
 
 .about-narrative .section-title {
@@ -1044,18 +1013,19 @@ strong {
   gap: var(--space-md);
   font-size: 1.05rem;
   line-height: 1.7;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
   margin-bottom: var(--space-2xl);
 }
 
 .about-stack {
   margin-bottom: var(--space-2xl);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--bleu-pale);
 }
 
 .stack-heading {
   font-size: 1.05rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-sm);
 }
 
@@ -1067,18 +1037,18 @@ strong {
 
 .stack-badge {
   font-size: 0.8125rem;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
   padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
+  border-radius: var(--radius-md);
+  color: var(--texte);
 }
 
 .about-cta-box {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-gold-border);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
   padding: var(--space-lg);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1088,47 +1058,36 @@ strong {
 
 .cta-box-text {
   font-size: 0.95rem;
-  color: var(--color-text);
+  color: var(--texte);
   max-width: 420px;
 }
 
-
 /* =============================================================================
-   11. TARIFS INDICATIFS EN FCFA
-   Grille transparente, mise en valeur de la formule la plus adaptée aux PME.
+   11. TARIFS INDICATIFS (OFFRES) (Fond : --blanc, Cartes : --bleu-pale)
    ============================================================================= */
 .section-pricing {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--blanc);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
+  max-width: 900px;
+  margin-inline: auto;
   margin-bottom: var(--space-2xl);
 }
 
 .pricing-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-2xl) var(--space-lg);
+  background-color: var(--bleu-pale);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform var(--transition-normal);
-}
-
-.pricing-card:hover {
-  transform: translateY(-3px);
-}
-
-/* Carte centrale mise en valeur */
-.pricing-card--featured {
-  background-color: var(--color-surface-elevated);
-  border-color: var(--color-gold-border);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .pricing-badge {
@@ -1136,32 +1095,25 @@ strong {
   align-self: flex-start;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-md);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-moyen);
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-md);
-}
-
-.pricing-badge--gold {
-  background-color: var(--color-gold-muted);
-  border-color: var(--color-gold);
-  color: var(--color-gold);
 }
 
 .pricing-plan {
   font-size: 1.45rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-xs);
 }
 
 .pricing-desc {
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  color: var(--texte-secondaire);
   margin-bottom: var(--space-lg);
-  min-height: 42px;
+  min-height: 48px;
 }
 
 .pricing-cost {
@@ -1171,48 +1123,48 @@ strong {
   flex-wrap: wrap;
   padding-bottom: var(--space-lg);
   margin-bottom: var(--space-lg);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(108, 147, 224, 0.25);
 }
 
 .cost-prefix {
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
+  color: var(--texte-secondaire);
 }
 
 .cost-amount {
-  font-family: var(--font-serif);
+  font-family: var(--font-title);
   font-size: 2.25rem;
   font-weight: 700;
-  color: var(--color-gold);
+  color: var(--bleu-fonce);
   line-height: 1;
 }
 
 .cost-currency {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
 .pricing-features {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.75rem;
   margin-bottom: var(--space-2xl);
   font-size: 0.875rem;
-  color: var(--color-text);
+  color: var(--texte);
   flex-grow: 1;
 }
 
 .pricing-features li {
   position: relative;
-  padding-left: 1.25rem;
+  padding-left: 1.35rem;
 }
 
 .pricing-features li::before {
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: 700;
 }
 
@@ -1223,86 +1175,105 @@ strong {
 
 .pricing-clarification {
   padding: var(--space-lg);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--fond);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
+  max-width: 900px;
+  margin-inline: auto;
 }
 
-
 /* =============================================================================
-   12. FORMULAIRE & CANAUX DE CONTACT
-   Coordonnées directes Dakar (WhatsApp/Tél) et formulaire accessible.
+   12. FORMULAIRE & CANAUX DE CONTACT (Fond : --fond, Blocs : --blanc)
    ============================================================================= */
 .section-contact {
   padding-block: var(--space-4xl);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--fond);
+  border-bottom: 1px solid var(--bleu-pale);
 }
 
 .contact-grid {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-3xl);
-  align-items: start;
 }
+
+.contact-info {
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.contact-channels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+
 
 .contact-info-title {
   font-size: 1.45rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-xs);
 }
 
 .contact-info-sub {
   font-size: 0.9375rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
   margin-bottom: var(--space-xl);
 }
 
-.contact-channels {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-2xl);
-}
-
 .channel-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  flex: 1 1 300px;
+  max-width: 400px;
+  min-width: 0;
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   padding: var(--space-md) var(--space-lg);
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition);
 }
 
 .channel-card:hover {
-  border-color: var(--color-border-light);
+  border-color: var(--bleu-moyen);
 }
 
 .channel-label {
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: 600;
 }
 
 .channel-link,
 .channel-static {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  color: var(--color-text);
-  font-weight: 600;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  color: var(--bleu-fonce);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
 }
 
 .channel-link:hover {
-  color: var(--color-gold);
+  color: var(--bleu);
 }
 
 .channel-hint {
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
+  color: var(--texte-secondaire);
 }
 
 .contact-guarantees {
@@ -1310,9 +1281,9 @@ strong {
   flex-direction: column;
   gap: 0.65rem;
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--bleu-pale);
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
 }
 
 .guarantee-item {
@@ -1322,26 +1293,30 @@ strong {
 }
 
 .guarantee-icon {
-  color: var(--color-gold);
+  color: var(--bleu);
   font-weight: bold;
 }
 
 /* Formulaire */
 .contact-form-wrapper {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-lg);
   padding: var(--space-2xl);
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
 }
 
 .form-title {
   font-size: 1.45rem;
+  color: var(--bleu-fonce);
   margin-bottom: var(--space-xs);
 }
 
 .form-intro {
   font-size: 0.9375rem;
-  color: var(--color-text-muted);
+  color: var(--texte-secondaire);
   line-height: 1.55;
   margin-bottom: var(--space-lg);
 }
@@ -1366,81 +1341,72 @@ strong {
 
 .form-label {
   font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text);
+  font-weight: 600;
+  color: var(--texte);
 }
 
 .required {
-  color: var(--color-gold);
+  color: var(--bleu);
 }
 
 .form-input,
 .form-select,
 .form-textarea {
   width: 100%;
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--blanc);
+  border: 1px solid var(--bleu-pale);
+  border-radius: var(--radius-md);
   padding: 0.75rem 0.95rem;
   font-size: 0.9375rem;
-  color: var(--color-text);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  color: var(--texte);
+  transition: border-color var(--transition);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--color-gold);
-  background-color: var(--color-surface-elevated);
+  border-color: var(--bleu);
 }
 
 .form-input.has-error,
 .form-textarea.has-error {
-  border-color: var(--color-error);
+  border-color: #df6b6b;
 }
 
 .form-error {
   font-size: 0.75rem;
-  color: var(--color-error);
+  color: #df6b6b;
   min-height: 1rem;
 }
 
 .form-select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='%23cba258'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='%232457C5'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.25rem;
 }
 
 .form-select option {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--blanc);
+  color: var(--texte);
 }
 
 .form-status {
   padding: 0;
   font-size: 0.875rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   line-height: 1.5;
 }
 
 .form-status.is-success {
   padding: var(--space-sm) var(--space-md);
-  background-color: rgba(78, 168, 115, 0.15);
-  border: 1px solid var(--color-success);
-  color: #79d79e;
+  background-color: var(--bleu-pale);
+  border: 1px solid var(--bleu-moyen);
+  color: var(--bleu-fonce);
 }
 
-.form-status.is-error {
-  padding: var(--space-sm) var(--space-md);
-  background-color: rgba(223, 107, 107, 0.15);
-  border: 1px solid var(--color-error);
-  color: #f19595;
-}
-
-/* Actions de transmission : WhatsApp principal & Email alternatif */
 .form-actions {
   display: flex;
   flex-direction: column;
@@ -1462,32 +1428,31 @@ strong {
 .btn-email-alt {
   font-size: 0.875rem;
   padding: 0.7rem 1.25rem;
-  border-color: var(--color-border);
-  color: var(--color-text-muted);
+  border-color: var(--bleu-pale);
+  color: var(--texte);
 }
 
 .btn-email-alt:hover,
 .btn-email-alt:focus-visible {
-  border-color: var(--color-text-muted);
-  color: var(--color-text);
-  background-color: var(--color-surface-elevated);
+  border-color: var(--bleu-moyen);
+  background-color: var(--bleu-pale);
+  color: var(--bleu-fonce);
 }
 
 .form-privacy-note {
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
-  text-align: center;
+  color: var(--texte-secondaire);
+  text-align: left;
   margin-top: var(--space-xs);
 }
 
-
 /* =============================================================================
-   13. FOOTER & BOUTON WHATSAPP FLOTTANT
-   Clôture sobre avec signature artisanale et bouton flottant ergonomique.
+   13. FOOTER & BOUTON WHATSAPP FLOTTANT (Footer : --bleu-fonce)
    ============================================================================= */
 .site-footer {
   padding-block: var(--space-3xl) var(--space-2xl);
-  background-color: #0d0c0b;
+  background-color: var(--bleu-fonce);
+  color: var(--blanc);
 }
 
 .footer-top {
@@ -1496,21 +1461,21 @@ strong {
   align-items: flex-start;
   gap: var(--space-3xl);
   padding-bottom: var(--space-2xl);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(228, 236, 250, 0.15);
 }
 
 .footer-brand {
-  font-family: var(--font-serif);
+  font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--blanc);
   display: inline-block;
   margin-bottom: var(--space-xs);
 }
 
 .footer-tagline {
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: var(--bleu-pale);
   max-width: 420px;
 }
 
@@ -1519,11 +1484,15 @@ strong {
   flex-wrap: wrap;
   gap: var(--space-lg);
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: var(--bleu-pale);
+}
+
+.footer-links a {
+  transition: color var(--transition);
 }
 
 .footer-links a:hover {
-  color: var(--color-gold);
+  color: var(--blanc);
 }
 
 .footer-bottom {
@@ -1534,19 +1503,25 @@ strong {
   gap: var(--space-md);
   padding-top: var(--space-xl);
   font-size: 0.8125rem;
-  color: var(--color-text-dim);
+  color: var(--bleu-pale);
+}
+
+.footer-copy {
+  color: var(--bleu-pale);
+  opacity: 0.85;
 }
 
 .back-to-top {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: var(--color-text-muted);
+  color: var(--bleu-pale);
   font-size: 0.8125rem;
+  transition: color var(--transition);
 }
 
 .back-to-top:hover {
-  color: var(--color-gold);
+  color: var(--blanc);
 }
 
 /* Bouton WhatsApp flottant sobre */
@@ -1563,17 +1538,16 @@ strong {
   justify-content: center;
   width: 54px;
   height: 54px;
-  background-color: #25d366;
-  color: #ffffff;
+  background-color: #25D366;
+  color: #FFFFFF;
   border-radius: 50%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: transform var(--transition);
   position: relative;
 }
 
 .whatsapp-btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  transform: scale(1.05);
 }
 
 .whatsapp-icon {
@@ -1581,22 +1555,21 @@ strong {
   height: 26px;
 }
 
-/* Tooltip discrète */
 .whatsapp-tooltip {
   position: absolute;
   right: calc(100% + 12px);
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--color-surface-elevated);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
+  background-color: var(--bleu-fonce);
+  color: var(--blanc);
+  border: 1px solid var(--bleu-moyen);
   padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font-size: 0.8125rem;
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transition: opacity var(--transition-fast);
+  transition: opacity var(--transition);
 }
 
 .whatsapp-btn:hover .whatsapp-tooltip,
@@ -1604,60 +1577,17 @@ strong {
   opacity: 1;
 }
 
-
 /* =============================================================================
-   14. ANIMATIONS & MICRO-INTERACTIONS
-   Apparitions progressives discrètes au défilement (Scroll Reveal).
-   ============================================================================= */
-.reveal-item {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.reveal-item.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Respect de l'accessibilité : désactivation si demandé par l'utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .reveal-item {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .status-pulse {
-    animation: none !important;
-  }
-}
-
-
-/* =============================================================================
-   15. RESPONSIVE (MEDIA QUERIES REGROUPÉES)
-   Approche mobile-first validée de 320px jusqu'à 1920px.
+   14. RESPONSIVE
    ============================================================================= */
 
-/* Tablettes et écrans intermédiaires (< 992px) */
+/* Tablettes (< 992px) */
 @media (max-width: 991px) {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
 
-  /* Sur mobile et tablette : la photo s'affiche au-dessus du texte */
   .hero-media {
     order: -1;
   }
@@ -1672,7 +1602,7 @@ strong {
 
   .project-visual {
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--bleu-pale);
     min-height: 200px;
   }
 
@@ -1698,15 +1628,6 @@ strong {
     max-width: 480px;
   }
 
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-
-  .pricing-desc {
-    min-height: auto;
-  }
-
   .contact-grid {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
@@ -1721,8 +1642,8 @@ strong {
 /* Mobiles (< 768px) */
 @media (max-width: 767px) {
   :root {
-    --space-4xl: 4rem;
-    --space-3xl: 3rem;
+    --space-4xl: 3.5rem;
+    --space-3xl: 2.5rem;
   }
 
   .site-header {
@@ -1731,49 +1652,15 @@ strong {
 
   .availability-badge {
     display: none;
-    /* Alléger la navbar sur mobile */
   }
 
+  /* Afficher le burger, cacher la nav desktop */
   .menu-toggle {
     display: flex;
   }
 
-  .nav-menu {
-    position: fixed;
-    top: 61px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--color-bg);
-    border-top: 1px solid var(--color-border);
-    padding: var(--space-2xl) var(--space-lg);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
-    overflow-y: auto;
-  }
-
-  .nav-menu.is-open {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-lg);
-  }
-
-  .nav-link {
-    font-size: 1.25rem;
-    font-family: var(--font-serif);
-  }
-
-  .nav-cta {
-    width: 100%;
-    margin-top: var(--space-sm);
+  .nav-desktop {
+    display: none;
   }
 
   .hero-title {
@@ -1787,6 +1674,14 @@ strong {
 
   .hero-actions .btn {
     width: 100%;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-desc {
+    min-height: auto;
   }
 
   .process-steps {
@@ -1827,7 +1722,6 @@ strong {
 
   .whatsapp-tooltip {
     display: none;
-    /* Pas de tooltip sur écran tactile */
   }
 }
 
