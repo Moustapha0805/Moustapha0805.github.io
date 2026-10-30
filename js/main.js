@@ -1,14 +1,133 @@
 /*
   =============================================================================
-  PROJET   : Portfolio Moustapha Gueye — Étudiant en développement web (Dakar)
+  PROJET   : Portfolio Moustapha Gueye — Développeur Web Freelance (Dakar)
   FICHIER  : js/main.js
-  RÔLE     : Logique interactive sans dépendance externe
+  RÔLE     : Logique interactive (Thème clair/sombre, menu mobile, défilement fluide, contact)
   AUTEUR   : Moustapha Gueye
   =============================================================================
 */
 
 /**
- * 01. GESTION DE LA NAVBAR AU DÉFILEMENT
+ * 01. GESTION DU THÈME CLAIR / SOMBRE
+ * Sombre par défaut, mémorisé dans localStorage
+ */
+function initTheme() {
+  var savedTheme = localStorage.getItem('portfolio-theme');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var currentTheme = savedTheme || 'dark'; // Mode sombre par défaut
+
+  applyTheme(currentTheme);
+
+  var themeToggleBtn = document.getElementById('theme-toggle');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function() {
+      var active = document.documentElement.getAttribute('data-theme') || 'dark';
+      var next = (active === 'dark') ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('portfolio-theme', next);
+    });
+  }
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+
+  var themeToggleBtn = document.getElementById('theme-toggle');
+  if (themeToggleBtn) {
+    var iconSun = themeToggleBtn.querySelector('.theme-icon-sun');
+    var iconMoon = themeToggleBtn.querySelector('.theme-icon-moon');
+    if (iconSun && iconMoon) {
+      if (theme === 'dark') {
+        iconSun.style.display = 'block';
+        iconMoon.style.display = 'none';
+        themeToggleBtn.setAttribute('aria-label', 'Passer au thème clair');
+        themeToggleBtn.setAttribute('title', 'Passer au thème clair');
+      } else {
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'block';
+        themeToggleBtn.setAttribute('aria-label', 'Passer au thème sombre');
+        themeToggleBtn.setAttribute('title', 'Passer au thème sombre');
+      }
+    }
+  }
+}
+
+/**
+ * 02. GESTION DU MENU MOBILE (DRAWER & OVERLAY)
+ * Panneau au-dessus de l'overlay, fermeture par croix/overlay/liens, blocage du scroll
+ */
+function initMobileMenu() {
+  var menuBtn    = document.getElementById('menu-toggle');
+  var closeBtn   = document.getElementById('drawer-close');
+  var drawer     = document.getElementById('nav-drawer');
+  var overlay    = document.getElementById('nav-overlay');
+
+  if (!menuBtn || !drawer || !overlay) return;
+
+  function openMenu() {
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('is-open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    overlay.classList.remove('is-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.classList.remove('is-active');
+    document.body.style.overflow = '';
+  }
+
+  // Toggle avec le bouton hamburger
+  menuBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (drawer.classList.contains('is-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Bouton croix dans le drawer
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
+  // Clic sur l'overlay sombre
+  overlay.addEventListener('click', closeMenu);
+
+  // Clic sur n'importe quel lien du drawer
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
+
+  // Fermer avec la touche Échap
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeMenu();
+      menuBtn.focus();
+    }
+  });
+
+  // Fermer si la fenêtre repasse en mode desktop (>= 768px)
+  window.addEventListener('resize', function() {
+    if (window.innerWidth >= 768 && drawer.classList.contains('is-open')) {
+      closeMenu();
+    }
+  });
+}
+
+/**
+ * 03. NAVBAR SCROLL EFFECT
  */
 function initNavbar() {
   var header = document.getElementById('header');
@@ -20,7 +139,7 @@ function initNavbar() {
 }
 
 /**
- * 02. DÉFILEMENT FLUIDE AVEC DÉCALAGE DE LA NAVBAR
+ * 04. DÉFILEMENT FLUIDE AVEC DÉCALAGE DE LA NAVBAR
  */
 function initSmoothScroll() {
   document.addEventListener('click', function(e) {
@@ -35,7 +154,7 @@ function initSmoothScroll() {
 
     e.preventDefault();
 
-    var headerOffset = 72;
+    var headerOffset = 80;
     var top = targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset;
 
     window.scrollTo({ top: top, behavior: 'smooth' });
@@ -47,53 +166,55 @@ function initSmoothScroll() {
 }
 
 /**
- * 03. TRANSMISSION DIRECTE SUR WHATSAPP & EMAIL
+ * 05. FORMULAIRE DE CONTACT DIRECT SUR WHATSAPP & EMAIL
  */
 function initContactForm() {
   var form      = document.getElementById('contact-form');
   var statusBox = document.getElementById('form-status');
-  var emailBtn  = document.getElementById('form-submit-email');
   if (!form || !statusBox) return;
 
-  function setFieldError(id, message) {
-    var errorSpan = document.getElementById(id + '-error');
-    var input     = document.getElementById('form-' + id);
+  function setFieldError(fieldKey, message) {
+    var errorSpan = document.getElementById(fieldKey + '-error');
+    var input     = document.getElementById('contact-' + fieldKey) || document.getElementById('form-' + fieldKey);
     if (errorSpan) errorSpan.textContent = message;
     if (input)     input.classList.toggle('has-error', Boolean(message));
   }
 
   function clearErrors() {
-    ['name', 'phone', 'message'].forEach(function(id) { setFieldError(id, ''); });
+    ['name', 'phone', 'message'].forEach(function(key) { setFieldError(key, ''); });
     statusBox.className   = 'form-status';
     statusBox.textContent = '';
   }
 
   function getFormData() {
-    var name        = form.name.value.trim();
-    var phone       = form.phone.value.trim();
-    var projectType = form.project_type.value;
-    var budget      = form.budget.value;
-    var message     = form.message.value.trim();
+    var nameInput    = form.querySelector('[name="name"]');
+    var phoneInput   = form.querySelector('[name="phone"]');
+    var serviceInput = form.querySelector('[name="service"]') || form.querySelector('[name="project_type"]');
+    var messageInput = form.querySelector('[name="message"]');
+
+    var name        = nameInput ? nameInput.value.trim() : '';
+    var phone       = phoneInput ? phoneInput.value.trim() : '';
+    var service     = serviceInput ? serviceInput.value : 'Site web';
+    var message     = messageInput ? messageInput.value.trim() : '';
     var hasError    = false;
 
     if (!name) {
-      setFieldError('name', 'Veuillez renseigner votre nom.');
+      setFieldError('name', 'Veuillez renseigner votre prénom ou nom.');
       hasError = true;
     }
     if (!phone) {
-      setFieldError('phone', 'Veuillez indiquer votre numéro WhatsApp ou téléphone.');
+      setFieldError('phone', 'Veuillez indiquer un numéro ou un email pour vous joindre.');
       hasError = true;
     }
-    if (!message || message.length < 10) {
-      setFieldError('message', 'Merci de décrire votre projet en quelques mots (au moins 10 caractères).');
+    if (!message || message.length < 5) {
+      setFieldError('message', 'Dites-moi en quelques mots ce dont vous avez besoin.');
       hasError = true;
     }
 
     if (hasError) return null;
-    return { name: name, phone: phone, projectType: projectType, budget: budget, message: message };
+    return { name: name, phone: phone, service: service, message: message };
   }
 
-  // Envoi WhatsApp
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     clearErrors();
@@ -101,79 +222,62 @@ function initContactForm() {
     if (!data) return;
 
     var text = encodeURIComponent(
-      '*Demande de projet web — Portfolio*\n' +
-      '👤 *Nom :* ' + data.name + '\n' +
-      '📱 *Téléphone :* ' + data.phone + '\n' +
-      '💼 *Type de projet :* ' + data.projectType + '\n' +
-      '💰 *Budget indicatif :* ' + data.budget + '\n\n' +
-      '📝 *Description du besoin :*\n' + data.message
+      'Bonjour Moustapha,\n\n' +
+      'Je vous contacte depuis votre portfolio :\n' +
+      '• Nom : ' + data.name + '\n' +
+      '• Contact : ' + data.phone + '\n' +
+      '• Type de projet : ' + data.service + '\n\n' +
+      'Message :\n' + data.message
     );
     var url = 'https://wa.me/221774409492?text=' + text;
 
     statusBox.className = 'form-status is-success';
-    statusBox.innerHTML = 'Votre demande est prête sur WhatsApp ! <a href="' + url + '" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:600;color:inherit;">Cliquez ici si WhatsApp ne s\'ouvre pas automatiquement</a>.';
+    statusBox.innerHTML = 'Votre message est prêt ! <a href="' + url + '" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;font-weight:700;color:inherit;">Cliquez ici pour ouvrir WhatsApp</a>.';
     window.open(url, '_blank');
   });
-
-  // Alternative email
-  if (emailBtn) {
-    emailBtn.addEventListener('click', function() {
-      clearErrors();
-      var data = getFormData();
-      if (!data) return;
-
-      var subject = encodeURIComponent('Nouveau projet web : ' + data.projectType + ' — ' + data.name);
-      var body    = encodeURIComponent(
-        'Bonjour Moustapha,\n\n' +
-        'Je vous contacte concernant un projet web :\n\n' +
-        '• Nom : ' + data.name + '\n' +
-        '• Téléphone / WhatsApp : ' + data.phone + '\n' +
-        '• Type de projet : ' + data.projectType + '\n' +
-        '• Budget indicatif : ' + data.budget + '\n\n' +
-        '• Description du besoin :\n' + data.message + '\n\n' +
-        '---\nMessage envoyé depuis votre portfolio.'
-      );
-      var mailto = 'mailto:gmoustapha0805@gmail.com?subject=' + subject + '&body=' + body;
-
-      statusBox.className = 'form-status is-success';
-      statusBox.innerHTML = 'Ouverture de votre messagerie... <a href="' + mailto + '" style="text-decoration:underline;font-weight:600;color:inherit;">Cliquez ici si rien ne s\'affiche</a>.';
-      window.location.href = mailto;
-    });
-  }
 }
 
 /**
- * 04. GESTION DES LIENS DE PROJETS CONDITIONNELS
+ * 06. GESTION DES LIENS DE PROJETS
  */
 function initProjectLinks() {
   document.querySelectorAll('.project-link').forEach(function(link) {
-    var rawLink = link.getAttribute('data-link');
-    if (!rawLink || rawLink.trim() === '' || rawLink === '#') {
-      link.style.display = 'none';
-      link.setAttribute('aria-hidden', 'true');
-    } else {
-      link.setAttribute('href', rawLink);
-      link.style.display = 'inline-flex';
-      link.removeAttribute('aria-hidden');
+    var dataLink = link.getAttribute('data-link');
+    if (dataLink !== null) {
+      if (dataLink.trim() === '' || dataLink === '#') {
+        link.style.display = 'none';
+        link.setAttribute('aria-hidden', 'true');
+      } else {
+        link.setAttribute('href', dataLink);
+        link.style.display = 'inline-flex';
+        link.removeAttribute('aria-hidden');
+      }
     }
   });
 }
 
 /**
- * 05. FALLBACK SI LA PHOTO EST ABSENTE
+ * 07. FALLBACK PHOTO
  */
 function initImageFallback() {
-  document.querySelectorAll('.photo-frame .photo-img').forEach(function(img) {
+  document.querySelectorAll('.hero-avatar-img, .photo-img').forEach(function(img) {
     img.addEventListener('error', function() {
+      var parent = img.parentElement;
+      if (parent) {
+        var fallback = parent.querySelector('.photo-fallback');
+        if (fallback) fallback.style.display = 'flex';
+      }
       img.style.display = 'none';
     });
   });
 }
 
 /* =============================================================================
-   POINT D'ENTRÉE
+   POINT D'ENTRÉE GLOBAL
    ============================================================================= */
 document.addEventListener('DOMContentLoaded', function() {
+  initTheme();
+  initMobileMenu();
   initNavbar();
   initSmoothScroll();
   initContactForm();
